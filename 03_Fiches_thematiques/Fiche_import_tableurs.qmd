@@ -291,6 +291,14 @@ mesDonnees <- readODS::read_ods(path = chemin_ods, range = "Sheet1!B2:D7")
 head(mesDonnees, 3)
 ```
 
+* **Importer en spécifiant les types des variables** : le paramètre `col_types` permet d'importer un onglet en spécifiant au préalable les types des colonnes. Cela peut être notamment utile pour éviter les erreurs d'interprétation lors de la lecture des données. Par exemple, une variable ne contenant que des chiffres sera interprétée comme numérique. Ainsi, les 0 en début de chaine seront supprimés. Il peut être utile de spécifier que le type de la variable en question est un caractère pour éviter ce phénomène.
+Le paramètre `col_types` attend un objet de classe `col_spec` que l'on peut construire en utilisant le package `readr`. Cela permet de définir les types des variables de deux manières : l'une en précisant les noms de variables avec le type attendu, l'autre en définissant directement un type par défaut.
+
+```{r }
+mesDonnees <- readODS::read_ods(path = chemin_ods, col_types = readr::cols(identifiant = readr::col_character(), .default = readr::col_number()))
+head(mesDonnees, 3)
+```
+
 ## Pour en savoir plus {#RessourcesImportXLSX}
 
 * [Package `openxlsx`](https://cran.r-project.org/web/packages/openxlsx/openxlsx.pdf) ;
